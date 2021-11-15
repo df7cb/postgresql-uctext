@@ -27,6 +27,18 @@ create table uc (
 	u uctext,
 	t text
 );
+select 'moo'::uctext = 'moo';
+ ?column? 
+----------
+ t
+(1 row)
+
+select 'moo'::uctext = 'MOO';
+ ?column? 
+----------
+ t
+(1 row)
+
 insert into uc values ('df7cb', 'df7cb');
 insert into uc values ('DF7CB', 'df7cb');
 select u, t, u = t, t = u from uc;
@@ -35,4 +47,37 @@ select u, t, u = t, t = u from uc;
  DF7CB | df7cb | t        | t
  DF7CB | df7cb | t        | t
 (2 rows)
+
+insert into uc select 'abC'||i::text from generate_series(1, 10000) g(i);
+create index on uc (u);
+analyze uc;
+select * from uc where u = 'abc123';
+   u    | t 
+--------+---
+ ABC123 | 
+(1 row)
+
+explain select * from uc where u = 'abc123';
+                             QUERY PLAN                             
+--------------------------------------------------------------------
+ Index Scan using uc_u_idx on uc  (cost=0.29..8.30 rows=1 width=16)
+   Index Cond: ((u)::text = 'ABC123'::text)
+(2 rows)
+
+select * from uc where u between 'abc123' and 'abc124';
+    u    | t 
+---------+---
+ ABC123  | 
+ ABC1230 | 
+ ABC1231 | 
+ ABC1232 | 
+ ABC1233 | 
+ ABC1234 | 
+ ABC1235 | 
+ ABC1236 | 
+ ABC1237 | 
+ ABC1238 | 
+ ABC1239 | 
+ ABC124  | 
+(12 rows)
 

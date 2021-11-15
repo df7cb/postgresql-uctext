@@ -18,4 +18,12 @@ insert into uc values ('DF7CB', 'df7cb');
 
 select u, t, u = t, t = u from uc;
 
+insert into uc select 'abC'||i::text from generate_series(1, 10000) g(i);
+
 create index on uc (u);
+analyze uc;
+
+select * from uc where u = 'abc123';
+explain select * from uc where u = 'abc123';
+
+select * from uc where u between 'abc123' and 'abc124';

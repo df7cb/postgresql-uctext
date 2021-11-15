@@ -16,6 +16,7 @@ GNU General Public License for more details.
 #include <fmgr.h>
 #include <utils/builtins.h>
 #include <utils/formatting.h>
+#include <catalog/pg_collation_d.h>
 
 /* module initialization */
 
@@ -33,6 +34,10 @@ uctext_in (PG_FUNCTION_ARGS)
 	char		*out_string;
 	text		*result;
 	Oid         collid = PG_GET_COLLATION();
+
+	/* collation info is unset in input function, fall back to default collation */
+	if (collid == InvalidOid)
+		collid = DEFAULT_COLLATION_OID;
 
 	out_string = str_toupper(str, len, collid);
 	result = cstring_to_text(out_string);
