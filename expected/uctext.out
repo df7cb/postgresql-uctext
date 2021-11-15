@@ -1,0 +1,38 @@
+create extension uctext;
+select null::uctext;
+ uctext 
+--------
+ 
+(1 row)
+
+select ''::uctext;
+ uctext 
+--------
+ 
+(1 row)
+
+select 'abc123'::uctext;
+ uctext 
+--------
+ ABC123
+(1 row)
+
+select 'ABC123'::uctext;
+ uctext 
+--------
+ ABC123
+(1 row)
+
+create table uc (
+	u uctext,
+	t text
+);
+insert into uc values ('df7cb', 'df7cb');
+insert into uc values ('DF7CB', 'df7cb');
+select u, t, u = t, t = u from uc;
+   u   |   t   | ?column? | ?column? 
+-------+-------+----------+----------
+ DF7CB | df7cb | t        | t
+ DF7CB | df7cb | t        | t
+(2 rows)
+

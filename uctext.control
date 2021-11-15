@@ -1,0 +1,4 @@
+default_version = '1'
+comment = 'hamradio extension'
+relocatable = true
+trusted = true
