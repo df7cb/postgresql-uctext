@@ -15,5 +15,6 @@ jobs:
     container: pgxn/pgxn-tools
     steps:
       - run: pg-start ${{ matrix.pg }}
+      - run: apt-get install -y m4
       - uses: actions/checkout@v2
       - run: pg-build-test
