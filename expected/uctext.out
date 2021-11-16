@@ -27,16 +27,16 @@ create table uc (
 	u uctext,
 	t text
 );
-select 'moo'::uctext = 'moo';
- ?column? 
-----------
- t
+select 'moo'::uctext = 'moo'::text, 'moo'::text = 'moo'::uctext;
+ ?column? | ?column? 
+----------+----------
+ t        | t
 (1 row)
 
-select 'moo'::uctext = 'MOO';
- ?column? 
-----------
- t
+select 'moo'::uctext = 'MOO'::text, 'MOO'::text = 'moo'::uctext;
+ ?column? | ?column? 
+----------+----------
+ t        | t
 (1 row)
 
 insert into uc values ('df7cb', 'df7cb');

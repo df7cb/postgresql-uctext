@@ -1,4 +1,4 @@
 default_version = '1'
-comment = 'hamradio extension'
+comment = 'UPPER CASE text'
 relocatable = true
 trusted = true

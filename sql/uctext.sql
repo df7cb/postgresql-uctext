@@ -10,8 +10,8 @@ create table uc (
 	t text
 );
 
-select 'moo'::uctext = 'moo';
-select 'moo'::uctext = 'MOO';
+select 'moo'::uctext = 'moo'::text, 'moo'::text = 'moo'::uctext;
+select 'moo'::uctext = 'MOO'::text, 'MOO'::text = 'moo'::uctext;
 
 insert into uc values ('df7cb', 'df7cb');
 insert into uc values ('DF7CB', 'df7cb');
