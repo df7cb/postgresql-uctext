@@ -1,7 +1,7 @@
 divert(-1)
 changequote(`[', `]')dnl
 
-define([parallel_safe], ifelse(eval(VERSION_NUM >= 130000), 1, [parallel safe], [--parallel safe]))
+define([parallel_safe], ifelse(eval(VERSION_NUM >= 90600), 1, [parallel safe], [--parallel safe]))
 
 divert(0)dnl
 -- type definition
