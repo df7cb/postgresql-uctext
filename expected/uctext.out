@@ -60,7 +60,7 @@ select * from uc where u = 'abc123';
 explain select * from uc where u = 'abc123';
                              QUERY PLAN                             
 --------------------------------------------------------------------
- Index Scan using uc_u_idx on uc  (cost=0.29..8.30 rows=1 width=16)
+ Index Scan using uc_u_idx on uc  (cost=0.29..8.30 rows=1 width=13)
    Index Cond: ((u)::text = 'ABC123'::text)
 (2 rows)
 
