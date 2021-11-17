@@ -17,6 +17,7 @@ insert into uc values ('df7cb', 'df7cb');
 insert into uc values ('DF7CB', 'df7cb');
 
 select u, t, u = t, t = u from uc;
+select * from uc where u = 'df7cb';
 
 insert into uc select 'abC'||i::text from generate_series(1, 10000) g(i);
 

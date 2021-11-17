@@ -1,0 +1,27 @@
+Source: postgresql-uctext
+Section: database
+Priority: optional
+Maintainer: Debian PostgreSQL Maintainers <team+postgresql@tracker.debian.org>
+Uploaders:
+ Christoph Berg <myon@debian.org>,
+Build-Depends:
+ debhelper-compat (= 13),
+ m4,
+ postgresql-all (>= 217~),
+Standards-Version: 4.6.0
+Rules-Requires-Root: no
+Homepage: https://github.com/df7cb/postgresql-uctext
+Vcs-Browser: https://github.com/df7cb/postgresql-uctext
+Vcs-Git: https://github.com/df7cb/postgresql-uctext.git
+
+Package: postgresql-PGVERSION-uctext
+Architecture: any
+Depends:
+ postgresql-PGVERSION,
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: UPPER CASE text extension for PostgreSQL
+ The uctext extension for PostgreSQL implements a text-like datatype that
+ accepts input in either case, but stores everything in UPPER CASE. It is meant
+ to be used for things like hamradio callsigns that are customarily spelled in
+ upper case, while being forgiving on input and searches.

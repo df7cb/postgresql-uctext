@@ -1,0 +1,5 @@
+postgresql-uctext (1-1) UNRELEASED; urgency=medium
+
+  * Initial release.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 17 Nov 2021 22:45:40 +0100

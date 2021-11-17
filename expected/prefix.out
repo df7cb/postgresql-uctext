@@ -1,0 +1,28 @@
+select * from uc where u =|| 'df';
+   u   |   t   
+-------+-------
+ DF7CB | df7cb
+ DF7CB | df7cb
+(2 rows)
+
+select * from uc where u =|| 'DF';
+   u   |   t   
+-------+-------
+ DF7CB | df7cb
+ DF7CB | df7cb
+(2 rows)
+
+select * from uc where t =|| 'df';
+   u   |   t   
+-------+-------
+ DF7CB | df7cb
+ DF7CB | df7cb
+(2 rows)
+
+select * from uc where t =|| 'DF';
+   u   |   t   
+-------+-------
+ DF7CB | df7cb
+ DF7CB | df7cb
+(2 rows)
+

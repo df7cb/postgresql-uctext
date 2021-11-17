@@ -3,7 +3,7 @@ OBJS = uctext.o
 EXTENSION = uctext
 EXTRA_CLEAN = uctext.control
 DATA_built = uctext--1.sql
-REGRESS = uctext
+REGRESS = uctext prefix
 
 PG_CONFIG = pg_config
 PGXS := $(shell $(PG_CONFIG) --pgxs)

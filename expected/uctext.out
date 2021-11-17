@@ -48,6 +48,13 @@ select u, t, u = t, t = u from uc;
  DF7CB | df7cb | t        | t
 (2 rows)
 
+select * from uc where u = 'df7cb';
+   u   |   t   
+-------+-------
+ DF7CB | df7cb
+ DF7CB | df7cb
+(2 rows)
+
 insert into uc select 'abC'||i::text from generate_series(1, 10000) g(i);
 create index on uc (u);
 analyze uc;

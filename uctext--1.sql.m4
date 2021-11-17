@@ -93,3 +93,18 @@ opr([eq], [=])
 opr([ne], [<>])
 opr([ge], [>=])
 opr([gt], [>])
+
+-- general functions
+
+create or replace function prefix_match(thing text, prefix text)
+	returns boolean
+	immutable
+	parallel_safe
+	language sql
+	as $$select thing >= prefix and thing < substring(prefix for length(prefix)-1) || chr(ascii(substring(prefix from length(prefix) for 1)) + 1)$$;
+
+create operator =|| (
+	leftarg = text,
+	rightarg = text,
+	function = prefix_match
+);
