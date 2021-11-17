@@ -32,6 +32,7 @@ create type uctext (
 	category = 'S',
 	internallength = variable,
 	alignment = int4,
+	storage = extended,
 	collatable = true
 );
 
