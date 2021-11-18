@@ -1,28 +1,28 @@
-select * from uc where u =|| 'df';
-   u   |   t   
--------+-------
- DF7CB | df7cb
- DF7CB | df7cb
-(2 rows)
+select * from log where call =|| 'dl';
+  call  |  loc   
+--------+--------
+ DL3RAR | JN68IV
+ DL4RCE | JN68AX
+ DL6UAA | JO62TD
+ DL6RDM | JN68HV
+ DL8NFA | JN59MP
+ DL8MKG | JO52NU
+ DL4NWM | JN59SM
+(7 rows)
 
-select * from uc where u =|| 'DF';
-   u   |   t   
--------+-------
- DF7CB | df7cb
- DF7CB | df7cb
-(2 rows)
+select * from log where loc =|| 'kn87';
+ call  |  loc   
+-------+--------
+ UX7QV | KN87DL
+ UY5VA | KN87
+ UY5VA | KN87
+ UT8IM | KN87SC
+(4 rows)
 
-select * from uc where t =|| 'df';
-   u   |   t   
--------+-------
- DF7CB | df7cb
- DF7CB | df7cb
-(2 rows)
-
-select * from uc where t =|| 'DF';
-   u   |   t   
--------+-------
- DF7CB | df7cb
- DF7CB | df7cb
+explain select * from log where loc =|| 'kn87';
+                                 QUERY PLAN                                 
+----------------------------------------------------------------------------
+ Seq Scan on log  (cost=0.00..1.94 rows=3 width=12)
+   Filter: (((loc)::text >= 'KN87'::text) AND ((loc)::text < 'KN88'::text))
 (2 rows)
 

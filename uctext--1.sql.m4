@@ -96,15 +96,61 @@ opr([gt], [>])
 
 -- general functions
 
+create or replace function string_inc(string text)
+	returns text
+	immutable
+	parallel_safe
+	language sql
+	as $$select substring(string for length(string)-1) || chr(ascii(substring(string from length(string) for 1)) + 1)$$;
+
 create or replace function prefix_match(thing text, prefix text)
 	returns boolean
 	immutable
 	parallel_safe
 	language sql
-	as $$select thing >= prefix and thing < substring(prefix for length(prefix)-1) || chr(ascii(substring(prefix from length(prefix) for 1)) + 1)$$;
+	as $$select thing >= prefix and thing < string_inc(prefix)$$;
 
 create operator =|| (
 	leftarg = text,
 	rightarg = text,
 	function = prefix_match
+);
+
+create or replace function prefix_match_uctext(thing uctext, prefix uctext)
+	returns boolean
+	immutable
+	parallel_safe
+	language sql
+	as $$select thing::text >= prefix::text and thing::text < string_inc(prefix::text)$$;
+
+create operator =|| (
+	leftarg = uctext,
+	rightarg = uctext,
+	function = prefix_match_uctext
+);
+
+create or replace function prefix_match_uctext_text(thing uctext, prefix text)
+	returns boolean
+	immutable
+	parallel_safe
+	language sql
+	as $$select thing::text >= upper(prefix) and thing::text < string_inc(upper(prefix))$$;
+
+create operator =|| (
+	leftarg = uctext,
+	rightarg = text,
+	function = prefix_match_uctext_text
+);
+
+create or replace function prefix_match_text_uctext(thing text, prefix uctext)
+	returns boolean
+	immutable
+	parallel_safe
+	language sql
+	as $$select upper(thing) >= prefix::text and upper(thing) < string_inc(prefix::text)$$;
+
+create operator =|| (
+	leftarg = text,
+	rightarg = uctext,
+	function = prefix_match_text_uctext
 );

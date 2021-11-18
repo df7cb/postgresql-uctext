@@ -23,10 +23,6 @@ select 'ABC123'::uctext;
  ABC123
 (1 row)
 
-create table uc (
-	u uctext,
-	t text
-);
 select 'moo'::uctext = 'moo'::text, 'moo'::text = 'moo'::uctext;
  ?column? | ?column? 
 ----------+----------
@@ -39,52 +35,84 @@ select 'moo'::uctext = 'MOO'::text, 'MOO'::text = 'moo'::uctext;
  t        | t
 (1 row)
 
-insert into uc values ('df7cb', 'df7cb');
-insert into uc values ('DF7CB', 'df7cb');
-select u, t, u = t, t = u from uc;
-   u   |   t   | ?column? | ?column? 
--------+-------+----------+----------
- DF7CB | df7cb | t        | t
- DF7CB | df7cb | t        | t
+create table log (
+	call uctext,
+	loc uctext
+);
+copy log from stdin;
+select * from log where call = 'pe1ftv';
+  call  |  loc   
+--------+--------
+ PE1FTV | JO21QI
+ PE1FTV | JO21QI
 (2 rows)
 
-select * from uc where u = 'df7cb';
-   u   |   t   
--------+-------
- DF7CB | df7cb
- DF7CB | df7cb
+select * from log where call = 'PE1FTV';
+  call  |  loc   
+--------+--------
+ PE1FTV | JO21QI
+ PE1FTV | JO21QI
 (2 rows)
 
-insert into uc select 'abC'||i::text from generate_series(1, 10000) g(i);
-create index on uc (u);
-analyze uc;
-select * from uc where u = 'abc123';
-   u    | t 
---------+---
- ABC123 | 
-(1 row)
+select * from log where call between 'dl0a' and 'dl9zzz';
+  call  |  loc   
+--------+--------
+ DL3RAR | JN68IV
+ DL4RCE | JN68AX
+ DL6UAA | JO62TD
+ DL6RDM | JN68HV
+ DL8NFA | JN59MP
+ DL8MKG | JO52NU
+ DL4NWM | JN59SM
+(7 rows)
 
-explain select * from uc where u = 'abc123';
-                             QUERY PLAN                             
---------------------------------------------------------------------
- Index Scan using uc_u_idx on uc  (cost=0.29..8.30 rows=1 width=13)
-   Index Cond: ((u)::text = 'ABC123'::text)
+explain select * from log where call between 'dl0a' and 'dl9zzz';
+                                   QUERY PLAN                                    
+---------------------------------------------------------------------------------
+ Seq Scan on log  (cost=0.00..23.20 rows=4 width=64)
+   Filter: (((call)::text >= 'DL0A'::text) AND ((call)::text <= 'DL9ZZZ'::text))
 (2 rows)
 
-select * from uc where u between 'abc123' and 'abc124';
-    u    | t 
----------+---
- ABC123  | 
- ABC1230 | 
- ABC1231 | 
- ABC1232 | 
- ABC1233 | 
- ABC1234 | 
- ABC1235 | 
- ABC1236 | 
- ABC1237 | 
- ABC1238 | 
- ABC1239 | 
- ABC124  | 
-(12 rows)
+create index on log (call);
+analyze log;
+set enable_seqscan = off;
+select * from log where call = 'pe1ftv';
+  call  |  loc   
+--------+--------
+ PE1FTV | JO21QI
+ PE1FTV | JO21QI
+(2 rows)
+
+select * from log where call = 'PE1FTV';
+  call  |  loc   
+--------+--------
+ PE1FTV | JO21QI
+ PE1FTV | JO21QI
+(2 rows)
+
+explain select * from log where call = 'pe1ftv';
+                               QUERY PLAN                                
+-------------------------------------------------------------------------
+ Index Scan using log_call_idx on log  (cost=0.14..8.18 rows=2 width=12)
+   Index Cond: ((call)::text = 'PE1FTV'::text)
+(2 rows)
+
+select * from log where call between 'dl0a' and 'dl9zzz';
+  call  |  loc   
+--------+--------
+ DL3RAR | JN68IV
+ DL4NWM | JN59SM
+ DL4RCE | JN68AX
+ DL6RDM | JN68HV
+ DL6UAA | JO62TD
+ DL8MKG | JO52NU
+ DL8NFA | JN59MP
+(7 rows)
+
+explain select * from log where call between 'dl0a' and 'dl9zzz';
+                                     QUERY PLAN                                      
+-------------------------------------------------------------------------------------
+ Index Scan using log_call_idx on log  (cost=0.14..8.28 rows=7 width=12)
+   Index Cond: (((call)::text >= 'DL0A'::text) AND ((call)::text <= 'DL9ZZZ'::text))
+(2 rows)
 
