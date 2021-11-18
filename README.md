@@ -6,6 +6,8 @@ accepts input in either case, but stores everything in UPPER CASE. It is meant
 to be used for things like hamradio callsigns that are customarily spelled in
 upper case, while being forgiving on input and searches.
 
+PostgreSQL 11 and later is supported.
+
 ```
 # create extension uctext;
 CREATE EXTENSION
