@@ -28,7 +28,8 @@ INSERT 0 1
 is an implicit cast from uctext to text. The only special handling is in
 comparison operators (`= <> < <= => >`) which act case-insensitive.
 
-Also included is a `=||` operator that does case-insensitive prefix matches:
+Also included is a `=||` operator that does prefix matches which are
+case-insensitive when either side is uctext:
 
 ```
 # select locator from my_logbook where locator =|| 'jo';
