@@ -101,7 +101,7 @@ create or replace function string_inc(string text)
 	immutable
 	parallel_safe
 	language sql
-	as $$select substring(string for length(string)-1) || chr(ascii(substring(string from length(string) for 1)) + 1)$$;
+	as $$select substring(string for length(string)-1) || case when substring(string from length(string) for 1) = '9' then 'A' else chr(ascii(substring(string from length(string) for 1)) + 1) end$$;
 
 create or replace function prefix_match(thing text, prefix text)
 	returns boolean
