@@ -96,12 +96,12 @@ opr([gt], [>])
 
 -- general functions
 
-create or replace function string_inc(string text)
+create or replace function string_inc(str text)
 	returns text
 	immutable
 	parallel_safe
 	language sql
-	as $$select substring(string for length(string)-1) || case when substring(string from length(string) for 1) = '9' then 'A' else chr(ascii(substring(string from length(string) for 1)) + 1) end$$;
+	as $$select substring(str for length(str)-1) || case when substring(str from length(str) for 1) = '9' then 'A' else chr(ascii(substring(str from length(str) for 1)) + 1) end$$;
 
 create or replace function prefix_match(thing text, prefix text)
 	returns boolean
